@@ -2,12 +2,8 @@ Go Period
 ============
 
 [![Author](http://img.shields.io/badge/author-@studiofrenetic-blue.svg?style=flat-square)](https://twitter.com/studiofrenetic)
-[![Github Downloads](https://img.shields.io/github/downloads/atom/atom/latest/total.svg?style=flat-square)](https://github.com/studiofrenetic/period)
-[![Latest Version](https://img.shields.io/github/release/studiofrenetic/period.svg?style=flat-square)](https://github.com/studiofrenetic/period/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/studiofrenetic/period/master.svg?style=flat-square)](https://travis-ci.org/studiofrenetic/period)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/studiofrenetic/period.svg?style=flat-square)](https://scrutinizer-ci.com/g/studiofrenetic/period/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/studiofrenetic/period.svg?style=flat-square)](https://scrutinizer-ci.com/g/studiofrenetic/period)
+
 
 Period provides a set of missing Time Range to Go, it cover all basic operations regardings time ranges.
 A Go port of [thephpleague/period](https://github.com/thephpleague/period) based on [Resolving Feature Envy in the Domain](http://verraes.net/2014/08/resolving-feature-envy-in-the-domain/) by Mathias Verraes and extends the concept to cover all basic operations regarding time ranges.
