@@ -136,9 +136,6 @@ func CreateFromYear(year int) (p Period, err error) {
 }
 
 // Create a Period object from a starting point and an interval.
-//                                              interpreted as the duration expressed in seconds.
-//                                              If a string is passed, it must be parsable by
-//                                              `Duration::createFromDateString`
 func CreateFromDuration(start time.Time, duration time.Duration) (p Period, err error) {
 
 	p.Start = start
