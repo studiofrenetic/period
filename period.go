@@ -22,9 +22,6 @@ type Period struct {
 }
 
 // Compare DateTimeInterface objects including microseconds
-// @param time.Time $date1
-// @param time.Time $date2
-// @return int
 func compareDate(date1, date2 time.Time) int {
 	if date1.UnixNano() > date2.UnixNano() {
 		return 1
@@ -38,9 +35,6 @@ func compareDate(date1, date2 time.Time) int {
 }
 
 // Create a Period object from a Year and a Week.
-// @param int64 $year
-// @param int64 $week index from 1 to 53
-// @return self A new instance
 func CreateFromWeek(year, week int) (p Period, err []error) {
 	if week, err = validateRange(week, 1, 53); err != nil {
 		return p, err
@@ -82,9 +76,6 @@ func validateRange(value, min, max int) (int, []error) {
 }
 
 // Create a Period object from a Year and a Month.
-// @param int $year
-// @param int $month Month index from 1 to 12
-// @return self A new instance
 func CreateFromMonth(year, month int) (p Period, err []error) {
 	if month, err = validateRange(month, 1, 12); err != nil {
 		return p, err
@@ -97,9 +88,6 @@ func CreateFromMonth(year, month int) (p Period, err []error) {
 }
 
 // Create a Period object from a Year and a Quarter.
-// @param int $year
-// @param int $quarter Quarter Index from 1 to 4
-// @return self A new instance
 func CreateFromQuarter(year, quarter int) (p Period, err []error) {
 	if quarter, err = validateRange(quarter, 1, 4); err != nil {
 		return p, err
@@ -112,9 +100,6 @@ func CreateFromQuarter(year, quarter int) (p Period, err []error) {
 }
 
 // Create a Period object from a Year and a Quarter.
-// @param int $year
-// @param int $semester Semester Index from 1 to 2
-// @return self A new instance
 func CreateFromSemester(year, semester int) (p Period, err []error) {
 	if semester, err = validateRange(semester, 1, 2); err != nil {
 		return p, err
@@ -127,8 +112,6 @@ func CreateFromSemester(year, semester int) (p Period, err []error) {
 }
 
 // Create a Period object from a Year
-// @param int $year
-// @return self A new instance
 func CreateFromYear(year int) (p Period, err []error) {
 	p.Start, _ = time.Parse(YMDHIS, fmt.Sprintf("%d-01-01 00:00:00", year))
 	p.End = p.Start.AddDate(1, 0, 0)
@@ -137,12 +120,9 @@ func CreateFromYear(year int) (p Period, err []error) {
 }
 
 // Create a Period object from a starting point and an interval.
-// @param string|\DateTimeInterface  $startDate start datepoint
-// @param \Duration|float|string $duration  The duration. If an numeric is passed, it is
 //                                              interpreted as the duration expressed in seconds.
 //                                              If a string is passed, it must be parsable by
 //                                              `Duration::createFromDateString`
-// @return self A new instance
 func CreateFromDuration(start time.Time, duration time.Duration) (p Period, err []error) {
 
 	p.Start = start
@@ -223,30 +203,22 @@ func (p *Period) Overlaps(period Period) bool {
 }
 
 // Tells whether two Period share the same datepoints.
-// @param Period $period
-// @return bool
 func (p *Period) SameValueAs(period Period) bool {
 	return 0 == compareDate(p.Start, period.Start) &&
 		0 == compareDate(p.End, period.End)
 }
 
 // Tells whether a Period is entirely after the specified index
-// @param Period|\DateTimeInterface $index
-// @return bool
 func (p *Period) IsAfter(period Period) bool {
 	return -1 < compareDate(p.Start, period.Start)
 }
 
 // Tells whether a Period is entirely before the specified index
-// @param Period|\DateTimeInterface $index
-// @return bool
 func (p *Period) IsBefore(period Period) bool {
 	return 1 > compareDate(p.End, period.End)
 }
 
 // Tells whether two Period object abuts
-// @param Period $period
-// @return bool
 func (p *Period) Abuts(period Period) (bool, int) {
 	found, pos := in_array(0, []int{
 		compareDate(p.Start, period.End),
@@ -278,9 +250,6 @@ func (p *Period) Diff(period Period) ([]Period, []error) {
 
 // Merges one or more Period objects to return a new Period object.
 // The resultant object englobes the largest duration possible.
-// @param Period $period
-// @param Period ...$periods one or more Period objects
-// @return self A new instance
 func (p *Period) Merge(periods ...Period) {
 	// allPeriods := []Period{}
 	for _, period := range periods {
@@ -295,8 +264,6 @@ func (p *Period) Merge(periods ...Period) {
 }
 
 // Computes the intersection between two Period objects.
-// @param Period $period
-// @return self A new instance
 func (p *Period) Intersect(period Period) (Period, []error) {
 	var newPeriod Period
 	if abuts, _ := p.Abuts(period); abuts {
@@ -328,41 +295,29 @@ func (p *Period) Gap(period Period) (newPeriod Period) {
 }
 
 // Compares two Period objects according to their duration.
-// @param Period $period
-// @return int
 func (p *Period) CompareDuration(period Period) int {
 	return compareDate(p.End, period.End)
 }
 
 // Tells whether the current Period object duration
 // is greater than the submitted one.
-//
-// @param Period $period
-//
-// @return bool
 func (p *Period) DurationGreaterThan(period Period) bool {
 	return 1 == p.CompareDuration(period)
 }
 
 // Tells whether the current Period object duration
 // is less than the submitted one.
-// @param Period $period
-// @return bool
 func (p *Period) DurationLessThan(period Period) bool {
 	return -1 == p.CompareDuration(period)
 }
 
 // Tells whether the current Period object duration
 // is equal to the submitted one
-// @param Period $period
-// @return bool
 func (p *Period) SameDurationAs(period Period) bool {
 	return 0 == p.CompareDuration(period)
 }
 
 // Create a Period object from a Year and a Quarter.
-// @param Period $period
-// @return \Duration
 func (p *Period) DurationDiff(period Period) time.Duration {
 	return time.Duration(p.TimestampDurationDiff(period)) * time.Nanosecond
 }
