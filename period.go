@@ -209,12 +209,25 @@ func (p *Period) Before(period Period) bool {
 
 // Tells whether two Period object abuts
 func (p *Period) Abuts(period Period) (bool, int) {
-	found, pos := in_array(0, []int{
-		compareDate(p.Start, period.End),
-		compareDate(p.End, period.Start),
-	})
+	if p.Start.Equal(period.End) || p.End.Equal(period.Start) {
+		var pos int = -1
 
-	return found, pos
+		if compareDate(p.Start, period.End) == 0 {
+			pos = 0
+		} else if compareDate(p.End, period.Start) == 0 {
+			pos = 1
+		}
+
+		return true, pos
+	}
+
+	return false, -1
+	// found, pos := in_array(0, []int{
+	// 	compareDate(p.Start, period.End),
+	// 	compareDate(p.End, period.Start),
+	// })
+
+	// return found, pos
 }
 
 func (p *Period) Diff(period Period) ([]Period, error) {
