@@ -222,12 +222,6 @@ func (p *Period) Abuts(period Period) (bool, int) {
 	}
 
 	return false, -1
-	// found, pos := in_array(0, []int{
-	// 	compareDate(p.Start, period.End),
-	// 	compareDate(p.End, period.Start),
-	// })
-
-	// return found, pos
 }
 
 func (p *Period) Diff(period Period) ([]Period, error) {
