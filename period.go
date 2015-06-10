@@ -2,7 +2,6 @@ package period
 
 import (
 	"fmt"
-	"reflect"
 	"time"
 )
 
@@ -326,25 +325,4 @@ func createFromDatepoints(date1, date2 time.Time) Period {
 	}
 
 	return Period{date1, date2}
-}
-
-// http://codereview.stackexchange.com/questions/60074/in-array-in-go
-func in_array(val interface{}, array interface{}) (exists bool, index int) {
-	exists = false
-	index = -1
-
-	switch reflect.TypeOf(array).Kind() {
-	case reflect.Slice:
-		s := reflect.ValueOf(array)
-
-		for i := 0; i < s.Len(); i++ {
-			if reflect.DeepEqual(val, s.Index(i).Interface()) == true {
-				index = i
-				exists = true
-				return
-			}
-		}
-	}
-
-	return
 }
