@@ -183,9 +183,7 @@ func (p *Period) Previous() {
 }
 
 func (p *Period) GetDurationInterval() time.Duration {
-	end := p.End.UnixNano()
-	start := p.Start.UnixNano()
-	return time.Duration(end-start) * time.Nanosecond
+	return p.End.Sub(p.Start)
 }
 
 func (p *Period) Overlaps(period Period) bool {
