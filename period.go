@@ -136,19 +136,19 @@ func CreateFromYear(year int) (p Period, err error) {
 }
 
 // Create a Period object from a starting point and an interval.
-func CreateFromDuration(start time.Time, duration time.Duration) (p Period, err error) {
+func CreateFromDuration(start time.Time, duration time.Duration) (p Period) {
 
 	p.Start = start
 	p.End = addDuration(p.Start, duration)
 
-	return p, nil
+	return p
 }
 
-func CreateFromDurationBeforeEnd(end time.Time, duration time.Duration) (p Period, err error) {
+func CreateFromDurationBeforeEnd(end time.Time, duration time.Duration) (p Period) {
 	p.Start = subDuration(end, duration)
 	p.End = end
 
-	return p, nil
+	return p
 }
 
 func (p *Period) Contains(index time.Time) bool {

@@ -67,10 +67,7 @@ func TestCreateFromDuration(t *testing.T) {
 	from := time.Date(2015, 5, 25, 0, 0, 0, 0, time.UTC)
 	duration := time.Duration(24*7) * time.Hour
 
-	p, err := CreateFromDuration(from, duration)
-	if err != nil {
-		assert.Fail(t, "Error create period from duration", "OutOfRangeError")
-	}
+	p := CreateFromDuration(from, duration)
 
 	expected := Period{
 		time.Date(2015, 5, 25, 0, 0, 0, 0, time.UTC),
@@ -85,10 +82,7 @@ func TestCreateFromDurationBeforeEnd(t *testing.T) {
 	from := time.Date(2015, 5, 25, 0, 0, 0, 0, time.UTC)
 	duration := time.Duration(24*7) * time.Hour
 
-	p, err := CreateFromDurationBeforeEnd(from, duration)
-	if err != nil {
-		assert.Fail(t, "Error create period from duration", "OutOfRangeError")
-	}
+	p := CreateFromDurationBeforeEnd(from, duration)
 
 	expected := Period{
 		time.Date(2015, 5, 18, 0, 0, 0, 0, time.UTC),
@@ -102,10 +96,7 @@ func TestNext(t *testing.T) {
 	from := time.Date(2015, 5, 25, 0, 0, 0, 0, time.UTC)
 	duration := time.Duration(24*2) * time.Hour
 
-	p, err := CreateFromDuration(from, duration)
-	if err != nil {
-		assert.Fail(t, "Error next", "")
-	}
+	p := CreateFromDuration(from, duration)
 
 	p.Next()
 
@@ -121,10 +112,7 @@ func TestPrevious(t *testing.T) {
 	from := time.Date(2015, 5, 25, 0, 0, 0, 0, time.UTC)
 	duration := time.Duration(24*2) * time.Hour
 
-	p, err := CreateFromDuration(from, duration)
-	if err != nil {
-		assert.Fail(t, "Error previous", "")
-	}
+	p := CreateFromDuration(from, duration)
 
 	p.Previous()
 
@@ -143,7 +131,7 @@ func TestDiff(t *testing.T) {
 	}
 	t.Logf("period: %s", period)
 
-	alt, err := CreateFromDuration(time.Date(2013, 1, 1, 0, 0, 0, 0, time.UTC), time.Duration(24*7)*time.Hour)
+	alt := CreateFromDuration(time.Date(2013, 1, 1, 0, 0, 0, 0, time.UTC), time.Duration(24*7)*time.Hour)
 	if err != nil {
 		t.Fatalf("err : %v\n", err)
 	}
@@ -161,15 +149,9 @@ func TestSameValueAs(t *testing.T) {
 	from := time.Date(2015, 5, 25, 0, 0, 0, 0, time.UTC)
 	duration := time.Duration(24*2) * time.Hour
 
-	p, err := CreateFromDuration(from, duration)
-	if err != nil {
-		t.Logf("err : %v\n", err)
-	}
+	p := CreateFromDuration(from, duration)
 
-	altPeriod, err := CreateFromDuration(from, duration)
-	if err != nil {
-		t.Logf("err : %v\n", err)
-	}
+	altPeriod := CreateFromDuration(from, duration)
 
 	isSame := p.SameValueAs(altPeriod)
 
@@ -179,21 +161,21 @@ func TestSameValueAs(t *testing.T) {
 
 func TestDiffWithEqualsPeriod(t *testing.T) {
 	period, _ := CreateFromYear(2015)
-	alt, _ := CreateFromDuration(time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC), (time.Duration(365*24) * time.Hour))
+	alt := CreateFromDuration(time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC), (time.Duration(365*24) * time.Hour))
 	diff, _ := alt.Diff(period)
 	t.Logf("diff: %v\nalt: %v", diff, alt)
 }
 
 func TestDiffWithPeriodSharingOneEndpoints(t *testing.T) {
 	period, _ := CreateFromYear(2015)
-	alt, _ := CreateFromDuration(time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC), (time.Duration(90*24) * time.Hour))
+	alt := CreateFromDuration(time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC), (time.Duration(90*24) * time.Hour))
 	diff, _ := alt.Diff(period)
 	t.Logf("%#v", diff)
 }
 
 func TestDiffWithOverlapsPeriod(t *testing.T) {
-	period, _ := CreateFromDuration(time.Date(2015, 1, 1, 10, 0, 0, 0, time.UTC), (time.Duration(3) * time.Hour))
-	alt, _ := CreateFromDuration(time.Date(2015, 1, 1, 11, 0, 0, 0, time.UTC), (time.Duration(3) * time.Hour))
+	period := CreateFromDuration(time.Date(2015, 1, 1, 10, 0, 0, 0, time.UTC), (time.Duration(3) * time.Hour))
+	alt := CreateFromDuration(time.Date(2015, 1, 1, 11, 0, 0, 0, time.UTC), (time.Duration(3) * time.Hour))
 	diff, _ := alt.Diff(period)
 
 	assert.Len(t, diff, 2, "The size of slice is not 2")
@@ -203,15 +185,15 @@ func TestDiffWithOverlapsPeriod(t *testing.T) {
 }
 
 func TestDurationDiff(t *testing.T) {
-	period, _ := CreateFromDuration(time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC), (time.Duration(1) * time.Hour))
-	alt, _ := CreateFromDuration(time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC), (time.Duration(2) * time.Hour))
+	period := CreateFromDuration(time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC), (time.Duration(1) * time.Hour))
+	alt := CreateFromDuration(time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC), (time.Duration(2) * time.Hour))
 	diff := period.DurationDiff(alt)
 
 	assert.Equal(t, (time.Duration(-1) * time.Hour), diff, "Should be 1 hour diff")
 }
 
 func TestContains(t *testing.T) {
-	period, _ := CreateFromDuration(time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC), (time.Duration(2) * time.Hour))
+	period := CreateFromDuration(time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC), (time.Duration(2) * time.Hour))
 	shouldContains := time.Date(2015, 1, 1, 0, 30, 0, 0, time.UTC)
 	contains := period.Contains(shouldContains)
 
