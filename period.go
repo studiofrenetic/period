@@ -307,7 +307,7 @@ func (p *Period) DurationLessThan(period Period) bool {
 // Tells whether the current Period object duration
 // is equal to the submitted one
 func (p *Period) SameDurationAs(period Period) bool {
-	return 0 == p.CompareDuration(period)
+	return p.GetDurationInterval() == period.GetDurationInterval()
 }
 
 // Create a Period object from a Year and a Quarter.
