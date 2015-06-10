@@ -35,7 +35,7 @@ func compareDate(date1, date2 time.Time) int {
 }
 
 // Create a Period object from a Year and a Week.
-func CreateFromWeek(year, week int) (p Period, err []error) {
+func CreateFromWeek(year, week int) (p Period, err error) {
 	if week, err = validateRange(week, 1, 53); err != nil {
 		return p, err
 	}
@@ -68,15 +68,15 @@ func CreateFromWeek(year, week int) (p Period, err []error) {
 	return p, nil
 }
 
-func validateRange(value, min, max int) (int, []error) {
+func validateRange(value, min, max int) (int, error) {
 	if value < min || value > max {
-		return value, []error{OutOfRangeError}
+		return value, OutOfRangeError
 	}
 	return value, nil
 }
 
 // Create a Period object from a Year and a Month.
-func CreateFromMonth(year, month int) (p Period, err []error) {
+func CreateFromMonth(year, month int) (p Period, err error) {
 	if month, err = validateRange(month, 1, 12); err != nil {
 		return p, err
 	}
@@ -88,7 +88,7 @@ func CreateFromMonth(year, month int) (p Period, err []error) {
 }
 
 // Create a Period object from a Year and a Quarter.
-func CreateFromQuarter(year, quarter int) (p Period, err []error) {
+func CreateFromQuarter(year, quarter int) (p Period, err error) {
 	if quarter, err = validateRange(quarter, 1, 4); err != nil {
 		return p, err
 	}
@@ -100,7 +100,7 @@ func CreateFromQuarter(year, quarter int) (p Period, err []error) {
 }
 
 // Create a Period object from a Year and a Quarter.
-func CreateFromSemester(year, semester int) (p Period, err []error) {
+func CreateFromSemester(year, semester int) (p Period, err error) {
 	if semester, err = validateRange(semester, 1, 2); err != nil {
 		return p, err
 	}
@@ -112,7 +112,7 @@ func CreateFromSemester(year, semester int) (p Period, err []error) {
 }
 
 // Create a Period object from a Year
-func CreateFromYear(year int) (p Period, err []error) {
+func CreateFromYear(year int) (p Period, err error) {
 	p.Start, _ = time.Parse(YMDHIS, fmt.Sprintf("%d-01-01 00:00:00", year))
 	p.End = p.Start.AddDate(1, 0, 0)
 
@@ -123,7 +123,7 @@ func CreateFromYear(year int) (p Period, err []error) {
 //                                              interpreted as the duration expressed in seconds.
 //                                              If a string is passed, it must be parsable by
 //                                              `Duration::createFromDateString`
-func CreateFromDuration(start time.Time, duration time.Duration) (p Period, err []error) {
+func CreateFromDuration(start time.Time, duration time.Duration) (p Period, err error) {
 
 	p.Start = start
 	p.End = addDuration(p.Start, duration)
@@ -131,7 +131,7 @@ func CreateFromDuration(start time.Time, duration time.Duration) (p Period, err 
 	return p, nil
 }
 
-func CreateFromDurationBeforeEnd(end time.Time, duration time.Duration) (p Period, err []error) {
+func CreateFromDurationBeforeEnd(end time.Time, duration time.Duration) (p Period, err error) {
 	p.Start = subDuration(end, duration)
 	p.End = end
 
@@ -228,9 +228,9 @@ func (p *Period) Abuts(period Period) (bool, int) {
 	return found, pos
 }
 
-func (p *Period) Diff(period Period) ([]Period, []error) {
+func (p *Period) Diff(period Period) ([]Period, error) {
 	if p.Overlaps(period) == false {
-		return nil, []error{ShouldOverlapsError}
+		return nil, ShouldOverlapsError
 	}
 
 	var res = []Period{}
@@ -264,10 +264,10 @@ func (p *Period) Merge(periods ...Period) {
 }
 
 // Computes the intersection between two Period objects.
-func (p *Period) Intersect(period Period) (Period, []error) {
+func (p *Period) Intersect(period Period) (Period, error) {
 	var newPeriod Period
 	if abuts, _ := p.Abuts(period); abuts {
-		return newPeriod, []error{BothShouldNotAbuts}
+		return newPeriod, BothShouldNotAbuts
 	}
 
 	if newPeriod.Start = p.Start; 1 == compareDate(period.Start, p.Start) {
