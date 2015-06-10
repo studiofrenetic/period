@@ -81,7 +81,11 @@ func CreateFromMonth(year, month int) (p Period, err error) {
 		return p, err
 	}
 
-	p.Start, _ = time.Parse(YMDHIS, fmt.Sprintf("%d-%02d-01 00:00:00", year, month))
+	p.Start, err = time.Parse(YMDHIS, fmt.Sprintf("%d-%02d-01 00:00:00", year, month))
+	if err != nil {
+		return p, err
+	}
+
 	p.End = p.Start.AddDate(0, 1, 0)
 
 	return p, nil
@@ -93,7 +97,11 @@ func CreateFromQuarter(year, quarter int) (p Period, err error) {
 		return p, err
 	}
 
-	p.Start, _ = time.Parse(YMDHIS, fmt.Sprintf("%d-%02d-01 00:00:00", year, ((quarter-1)*3)+1))
+	p.Start, err = time.Parse(YMDHIS, fmt.Sprintf("%d-%02d-01 00:00:00", year, ((quarter-1)*3)+1))
+	if err != nil {
+		return p, err
+	}
+
 	p.End = p.Start.AddDate(0, 3, 0)
 
 	return p, nil
@@ -105,7 +113,11 @@ func CreateFromSemester(year, semester int) (p Period, err error) {
 		return p, err
 	}
 
-	p.Start, _ = time.Parse(YMDHIS, fmt.Sprintf("%d-%02d-01 00:00:00", year, ((semester-1)*6)+1))
+	p.Start, err = time.Parse(YMDHIS, fmt.Sprintf("%d-%02d-01 00:00:00", year, ((semester-1)*6)+1))
+	if err != nil {
+		return p, err
+	}
+
 	p.End = p.Start.AddDate(0, 6, 0)
 
 	return p, nil
@@ -113,7 +125,11 @@ func CreateFromSemester(year, semester int) (p Period, err error) {
 
 // Create a Period object from a Year
 func CreateFromYear(year int) (p Period, err error) {
-	p.Start, _ = time.Parse(YMDHIS, fmt.Sprintf("%d-01-01 00:00:00", year))
+	p.Start, err = time.Parse(YMDHIS, fmt.Sprintf("%d-01-01 00:00:00", year))
+	if err != nil {
+		return p, err
+	}
+
 	p.End = p.Start.AddDate(1, 0, 0)
 
 	return p, nil
