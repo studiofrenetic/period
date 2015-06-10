@@ -139,13 +139,13 @@ func CreateFromYear(year int) (p Period, err error) {
 func CreateFromDuration(start time.Time, duration time.Duration) (p Period) {
 
 	p.Start = start
-	p.End = addDuration(p.Start, duration)
+	p.End = p.Start.Add(duration)
 
 	return p
 }
 
 func CreateFromDurationBeforeEnd(end time.Time, duration time.Duration) (p Period) {
-	p.Start = subDuration(end, duration)
+	p.Start = end.Add(-1 * duration)
 	p.End = end
 
 	return p
@@ -156,17 +156,6 @@ func (p *Period) Contains(index time.Time) bool {
 		(-1 == compareDate(index, p.End))
 }
 
-func addDuration(date time.Time, duration time.Duration) time.Time {
-	return date.Add(duration)
-}
-
-func subDuration(date time.Time, duration time.Duration) time.Time {
-	sub := time.Duration(-duration.Nanoseconds()) * time.Nanosecond
-	date = date.Add(sub)
-
-	return date
-}
-
 func (p *Period) StartingOn(start time.Time) {
 	p.Start = start
 }
@@ -175,28 +164,28 @@ func (p *Period) EndingOn(end time.Time) {
 }
 
 func (p *Period) WithDuration(duration time.Duration) {
-	p.End = addDuration(p.Start, duration)
+	p.End = p.Start.Add(duration)
 }
 
 func (p *Period) Add(duration time.Duration) {
-	p.End = addDuration(p.End, duration)
+	p.End = p.End.Add(duration)
 }
 
 func (p *Period) Sub(duration time.Duration) {
-	p.End = subDuration(p.End, duration)
+	p.End = p.End.Add(-1 * duration)
 }
 
 func (p *Period) Next() {
 	clone := *p
 	duration := clone.GetDurationInterval()
 	p.Start = clone.End
-	p.End = addDuration(clone.End, duration)
+	p.End = clone.End.Add(duration)
 }
 
 func (p *Period) Previous() {
 	clone := *p
 	duration := clone.GetDurationInterval()
-	p.Start = subDuration(clone.Start, duration)
+	p.Start = clone.Start.Add(-1 * duration)
 	p.End = clone.Start
 }
 
