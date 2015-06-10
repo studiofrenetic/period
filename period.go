@@ -197,12 +197,6 @@ func (p *Period) Overlaps(period Period) bool {
 		(1 == compareDate(p.End, period.Start))
 }
 
-// Tells whether two Period share the same datepoints.
-func (p *Period) SameValueAs(period Period) bool {
-	return 0 == compareDate(p.Start, period.Start) &&
-		0 == compareDate(p.End, period.End)
-}
-
 // Tells whether a Period is entirely after the specified index
 func (p *Period) IsAfter(period Period) bool {
 	return -1 < compareDate(p.Start, period.Start)

@@ -153,7 +153,7 @@ func TestSameValueAs(t *testing.T) {
 
 	altPeriod := CreateFromDuration(from, duration)
 
-	isSame := p.SameValueAs(altPeriod)
+	var isSame bool = p == altPeriod
 
 	t.Logf("p: %s, is same: %t", p, isSame)
 
