@@ -13,13 +13,8 @@ const (
 	ICSFORMATWHOLEDAY = "20060102"            // ics date format ( describes a whole day)
 )
 
-var StartWeek time.Weekday
-var Timezone *time.Location
-
-func init() {
-	StartWeek = time.Monday
-	Timezone = time.UTC
-}
+var StartWeek time.Weekday = time.Monday
+var Timezone *time.Location = time.UTC
 
 type Period struct {
 	Start time.Time `json:"start"`
