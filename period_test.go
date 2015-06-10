@@ -209,3 +209,11 @@ func TestDurationDiff(t *testing.T) {
 
 	assert.Equal(t, (time.Duration(-1) * time.Hour), diff, "Should be 1 hour diff")
 }
+
+func TestContains(t *testing.T) {
+	period, _ := CreateFromDuration(time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC), (time.Duration(2) * time.Hour))
+	shouldContains := time.Date(2015, 1, 1, 0, 30, 0, 0, time.UTC)
+	contains := period.Contains(shouldContains)
+
+	assert.Equal(t, true, contains, "Should be true")
+}

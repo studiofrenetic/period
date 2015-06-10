@@ -23,11 +23,11 @@ type Period struct {
 
 // Compare DateTimeInterface objects including microseconds
 func compareDate(date1, date2 time.Time) int {
-	if date1.UnixNano() > date2.UnixNano() {
+	if date1.After(date2) {
 		return 1
 	}
 
-	if date1.UnixNano() < date2.UnixNano() {
+	if date1.Before(date2) {
 		return -1
 	}
 
