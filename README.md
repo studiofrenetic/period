@@ -20,6 +20,10 @@ Install `Period` using go get.
 $ go get github.com/studiofrenetic/period
 ```
 
+Doc
+-------
+https://godoc.org/github.com/studiofrenetic/period
+
 Testing
 -------
 
