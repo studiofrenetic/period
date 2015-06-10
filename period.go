@@ -275,17 +275,17 @@ func (p *Period) Intersect(period Period) (Period, error) {
 	return newPeriod, nil
 }
 
-func (p *Period) Gap(period Period) (newPeriod Period) {
-
+func (p *Period) Gap(period Period) Period {
+	var newPeriod Period
 	if 1 == compareDate(period.Start, p.Start) {
 		newPeriod.Start = p.End
 		newPeriod.End = period.Start
-		return
+		return newPeriod
 	}
 
 	newPeriod.Start = period.End
 	newPeriod.End = p.Start
-	return
+	return newPeriod
 }
 
 // Compares two Period objects according to their duration.
