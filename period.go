@@ -156,13 +156,6 @@ func (p *Period) Contains(index time.Time) bool {
 		(-1 == compareDate(index, p.End))
 }
 
-func (p *Period) StartingOn(start time.Time) {
-	p.Start = start
-}
-func (p *Period) EndingOn(end time.Time) {
-	p.End = end
-}
-
 func (p *Period) WithDuration(duration time.Duration) {
 	p.End = p.Start.Add(duration)
 }
@@ -256,11 +249,11 @@ func (p *Period) Merge(periods ...Period) {
 	// allPeriods := []Period{}
 	for _, period := range periods {
 		if 1 == compareDate(p.Start, period.Start) {
-			p.StartingOn(period.Start)
+			p.Start = period.Start
 		}
 
 		if -1 == compareDate(p.End, period.End) {
-			p.EndingOn(period.End)
+			p.End = period.End
 		}
 	}
 }
