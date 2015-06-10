@@ -198,13 +198,13 @@ func (p *Period) Overlaps(period Period) bool {
 }
 
 // Tells whether a Period is entirely after the specified index
-func (p *Period) IsAfter(period Period) bool {
-	return -1 < compareDate(p.Start, period.Start)
+func (p *Period) After(period Period) bool {
+	return p.Start.After(period.End)
 }
 
 // Tells whether a Period is entirely before the specified index
-func (p *Period) IsBefore(period Period) bool {
-	return 1 > compareDate(p.End, period.End)
+func (p *Period) Before(period Period) bool {
+	return p.End.Before(period.Start)
 }
 
 // Tells whether two Period object abuts

@@ -199,3 +199,21 @@ func TestContains(t *testing.T) {
 
 	assert.Equal(t, true, contains, "Should be true")
 }
+
+func TestBefore(t *testing.T) {
+	period := CreateFromDuration(time.Date(2015, 1, 1, 13, 0, 0, 0, time.UTC), (time.Duration(2) * time.Hour))
+	alt := CreateFromDuration(time.Date(2015, 1, 1, 15, 30, 0, 0, time.UTC), (time.Duration(2) * time.Hour))
+
+	isBefore := period.Before(alt)
+
+	assert.Equal(t, true, isBefore, "Should be true")
+}
+
+func TestAfter(t *testing.T) {
+	period := CreateFromDuration(time.Date(2015, 1, 1, 13, 0, 0, 0, time.UTC), (time.Duration(2) * time.Hour))
+	alt := CreateFromDuration(time.Date(2015, 1, 1, 1, 11, 0, 0, time.UTC), (time.Duration(2) * time.Hour))
+
+	isAfter := period.After(alt)
+
+	assert.Equal(t, true, isAfter, "Should be true")
+}
