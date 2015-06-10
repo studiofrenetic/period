@@ -2,6 +2,7 @@ Go Period
 ============
 
 [![Author](http://img.shields.io/badge/author-@studiofrenetic-blue.svg?style=flat-square)](https://twitter.com/studiofrenetic)
+[![GoDoc](https://godoc.org/github.com/studiofrenetic/period?status.svg)](https://godoc.org/github.com/studiofrenetic/period)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 
 
