@@ -33,6 +33,21 @@ func compareDate(date1, date2 time.Time) int {
 	return 0
 }
 
+func CreateFromDay(year int, month int, day int) (p Period, err error) {
+	if month, err = validateRange(month, 1, 12); err != nil {
+		return p, err
+	}
+
+	if day, err = validateRange(day, 1, 31); err != nil {
+		return p, err
+	}
+
+	p.Start = time.Date(year, time.Month(month), day, 0, 0, 0, 0, Timezone)
+	p.End = p.Start.AddDate(0, 0, 1)
+
+	return p, nil
+}
+
 // Create a Period object from a Year and a Week.
 func CreateFromWeek(year, week int) (p Period, err error) {
 	if week, err = validateRange(week, 1, 53); err != nil {
