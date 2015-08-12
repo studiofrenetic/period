@@ -45,6 +45,28 @@ func Today() (p Period, err error) {
 	return p, nil
 }
 
+// Tomorrow create a new period for Tomorrow
+func Tomorrow() (p Period, err error) {
+	p, err = Today()
+	if err != nil {
+		return p, err
+	}
+	p.Next()
+
+	return p, nil
+}
+
+// Yesterday create a new period for Yesterday
+func Yesterday() (p Period, err error) {
+	p, err = Today()
+	if err != nil {
+		return p, err
+	}
+	p.Previous()
+
+	return p, nil
+}
+
 // CreateFromDay create a new period for a specific day
 func CreateFromDay(year int, month int, day int) (p Period, err error) {
 	if month, err = validateRange(month, 1, 12); err != nil {
