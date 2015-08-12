@@ -33,6 +33,18 @@ func compareDate(date1, date2 time.Time) int {
 	return 0
 }
 
+// Today create a new period for today
+func Today() (p Period, err error) {
+	var now = time.Now()
+
+	p, err = CreateFromDay(now.Year(), int(now.Month()), now.Day())
+	if err != nil {
+		return p, err
+	}
+
+	return p, nil
+}
+
 func CreateFromDay(year int, month int, day int) (p Period, err error) {
 	if month, err = validateRange(month, 1, 12); err != nil {
 		return p, err
